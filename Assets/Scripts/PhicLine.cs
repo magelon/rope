@@ -24,6 +24,8 @@ public class PhicLine : MonoBehaviour
     float offsetY;
     float offsetX;
 
+    public SpriteRenderer head;
+
     //when enconter a new obstcal sign a new startPoint
     public GameObject startPoint;
 
@@ -48,15 +50,15 @@ public class PhicLine : MonoBehaviour
 
         //add the first circle in to queue and set rigidbody static
         GameObject firstCircle = Instantiate(cir, transform.position, Quaternion.identity);
-        firstCircle.transform.position = new Vector3(0, 0, 0);
+        firstCircle.transform.position = new Vector3(0, -3, 0);
         //before the circle pool is empty the last circle is static
-        firstCircle.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        //firstCircle.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         circleList.Add(firstCircle);
 
         //add the point circle
         GameObject PointerCircle = Instantiate(cir, transform.position, Quaternion.identity);
-        PointerCircle.transform.position = new Vector3(0, 0, 0);
-        PointerCircle.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        PointerCircle.transform.position = new Vector3(0, -2.5f, 0);
+        //PointerCircle.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         circleList.Add(PointerCircle);
         len = circleList.Count;
         //len = circles.Length;
@@ -90,9 +92,9 @@ public class PhicLine : MonoBehaviour
         int RCount = (int)(currentDis / 0.1);
         if (circleList.Count>2&&circleList.Count > RCount)
         {
-            GameObject gonaRemove = circleList[1];
+            GameObject gonaRemove = circleList[len-2];
             gonaRemove.SetActive(false);
-            circleList.Remove(circleList[1]);
+            circleList.Remove(circleList[len-2]);
         }
     }
 
@@ -116,7 +118,9 @@ public class PhicLine : MonoBehaviour
                     c.transform.position = top.transform.position;
                     c.SetActive(true);
                     circleList.Add(c);
+                    circleList[len - 1].GetComponent<SpriteRenderer>().color = Color.white;
                     len++;
+                    circleList[len - 1].GetComponent<SpriteRenderer>().color = Color.red;
                     break;
                 }
             }
