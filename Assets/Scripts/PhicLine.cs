@@ -90,7 +90,7 @@ public class PhicLine : MonoBehaviour
         float currentDis = Vector3.Distance(end.transform.position, start.transform.position);
         //resonable count
         int RCount = (int)(currentDis / 0.1);
-        if (circleList.Count>2&&circleList.Count > RCount)
+        if (circleList.Count>4&&circleList.Count > RCount)
         {
             GameObject gonaRemove = circleList[len-2];
             gonaRemove.SetActive(false);
