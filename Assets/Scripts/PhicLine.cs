@@ -24,7 +24,7 @@ public class PhicLine : MonoBehaviour
     float offsetY;
     float offsetX;
 
-    public SpriteRenderer head;
+    //public SpriteRenderer head;
 
     //when enconter a new obstcal sign a new startPoint
     public GameObject startPoint;
@@ -53,12 +53,16 @@ public class PhicLine : MonoBehaviour
         firstCircle.transform.position = new Vector3(0, -3, 0);
         //before the circle pool is empty the last circle is static
         //firstCircle.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+
+        //firstCircle.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         circleList.Add(firstCircle);
 
         //add the point circle
         GameObject PointerCircle = Instantiate(cir, transform.position, Quaternion.identity);
         PointerCircle.transform.position = new Vector3(0, -2.5f, 0);
         //PointerCircle.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+
+        //PointerCircle.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         circleList.Add(PointerCircle);
         len = circleList.Count;
         //len = circles.Length;
@@ -78,6 +82,7 @@ public class PhicLine : MonoBehaviour
         //    new GradientAlphaKey[] { new GradientAlphaKey(alpha, 0.0f), new GradientAlphaKey(alpha, 1.0f) }
         //);
         //lineRenderer.colorGradient = gradient;
+
         startPoint = circleList[0];
 
     }
@@ -107,7 +112,7 @@ public class PhicLine : MonoBehaviour
         distance = Vector3.Distance(top.transform.position, second.transform.position);
 
 
-        if (distance > 0.2)
+        if (distance > 1)
         {
             //add one to list
             for (int i = 0; i < circlePool.Count; i++)
@@ -117,10 +122,11 @@ public class PhicLine : MonoBehaviour
                 {
                     c.transform.position = top.transform.position;
                     c.SetActive(true);
+                    //c.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
                     circleList.Add(c);
-                    circleList[len - 1].GetComponent<SpriteRenderer>().color = Color.white;
+                    //circleList[len - 1].GetComponent<SpriteRenderer>().color = Color.white;
                     len++;
-                    circleList[len - 1].GetComponent<SpriteRenderer>().color = Color.red;
+                    //circleList[len - 1].GetComponent<SpriteRenderer>().color = Color.red;
                     break;
                 }
             }
@@ -194,6 +200,7 @@ public class PhicLine : MonoBehaviour
             Vector3 offsetToNext = circleList[i + 1].transform.position - circleList[i].transform.position;
             Vector3 velocity = offsetToPrev * force + offsetToNext * force;
 
+            //circleList[i].GetComponent<Rigidbody>().AddForce(velocity);
             circleList[i].transform.position+=velocity * Time.deltaTime / len*20;
         }
 
